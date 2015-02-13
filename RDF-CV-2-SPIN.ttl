@@ -16,8 +16,8 @@
 @prefix functions: <http://www.example.org/functions#> .
 @prefix templates: <http://www.example.org/templates#> .
 @prefix sparql:    <http://www.w3.org/TR/sparql11-query/#> .
-@prefix rdfcv2spin: <http://constraints.org/rdfcv2spin#> .
-@prefix rdfcv:      <http://constraints.org/rdfcv#> .
+@prefix rdfcv2spin: <http://RDF-Constraints-Vocabulary.org/rdfcv2spin#>.
+@prefix rdfcv:      <http://RDF-Constraints-Vocabulary.org/rdfcv#> .
 
 # class constraints
 # if a constraint has been attached to owl:Thing, it will always execute that 
@@ -32,7 +32,7 @@ owl:Thing
 		[   a rdfcv2spin:universal-quantification-on-properties ] ,
 		[   a rdfcv2spin:asymmetric-object-properties_complex-constraint ] ,
 		[   a rdfcv2spin:asymmetric-object-properties_complex-constraint_2 ] ,
-		[   a rdfcv2spin:asymmetric-object-properties_simpple-constraint ] ,
+		[   a rdfcv2spin:asymmetric-object-properties_simple-constraint ] ,
 		[   a rdfcv2spin:asymmetric-object-properties_simple-constraint_2 ] ,
 		[   a rdfcv2spin:inverse-properties ] ,
 		[   a rdfcv2spin:inverse-properties_2 ] ,
@@ -85,7 +85,7 @@ rdfcv2spin:minimum-qualified-cardinality-restrictions-on-properties
     spin:body [
         rdf:type sp:Construct ;
         sp:text """
-            PREFIX rdfcv2spin: <http://constraints.org/rdfcv2spin#>
+            PREFIX rdfcv2spin: <http://RDF-Constraints-Vocabulary.org/rdfcv2spin#>
             CONSTRUCT {
                 _:cv 
                 	a spin:ConstraintViolation ;
@@ -96,7 +96,7 @@ rdfcv2spin:minimum-qualified-cardinality-restrictions-on-properties
             WHERE {	  
 			    # constraint
 				# ----------
-				[   a rdfcv:PropertyConstraint ;
+				[   a rdfcv:PropertyConstraint , rdfcv:SimpleConstraint ;
 				    rdfcv:contextClass ?cc ;
 				    rdfcv:leftProperties ( ?p1 ) ;
 				    rdfcv:classes ( ?c1 ) ;
@@ -158,7 +158,7 @@ rdfcv2spin:disjoint-classes_2C
     spin:body [
         rdf:type sp:Construct ;
         sp:text """
-            PREFIX rdfcv2spin: <http://constraints.org/rdfcv2spin#>
+            PREFIX rdfcv2spin: <http://RDF-Constraints-Vocabulary.org/rdfcv2spin#>
             CONSTRUCT {
                 _:cv 
                 	a spin:ConstraintViolation ;
@@ -168,12 +168,11 @@ rdfcv2spin:disjoint-classes_2C
             WHERE {	  
 			    # constraint
 				# ----------
-				[   a rdfcv:ClassConstraint ;
+				[   a rdfcv:ClassConstraint , rdfcv:SimpleConstraint ;
 				    rdfcv:contextClass ?intersection ;
 				    rdfcv:classes ( ?c1 ?c2 ) ;
 				    rdfcv:constrainingElement "Intersection" ] .
-				[
-				    a rdfcv:ClassConstraint ;
+				[   a rdfcv:ClassConstraint , rdfcv:SimpleConstraint ;
 				    rdfcv:contextClass owl:Thing ;
 				    rdfcv:classes ( ?intersection owl:Nothing ) ;
 				    rdfcv:constrainingElement "Inclusion" ] .
@@ -212,7 +211,7 @@ rdfcv2spin:existential-quantification-on-properties
     spin:body [
         rdf:type sp:Construct ;
         sp:text """
-            PREFIX rdfcv2spin: <http://constraints.org/rdfcv2spin#>
+            PREFIX rdfcv2spin: <http://RDF-Constraints-Vocabulary.org/rdfcv2spin#>
             CONSTRUCT {
                 _:cv 
                 	a spin:ConstraintViolation ;
@@ -223,12 +222,11 @@ rdfcv2spin:existential-quantification-on-properties
             WHERE {	  
 			    # constraint
 				# ----------
-				_:pc1
-				    a rdfcv:PropertyConstraint ;
+				[   a rdfcv:PropertyConstraint , rdfcv:SimpleConstraint ;
 				    rdfcv:contextClass ?cc ;
 				    rdfcv:leftProperties ( ?p1 ) ;
 				    rdfcv:classes ( ?c1 ) ;
-				    rdfcv:constrainingElement "existential restrictions" .
+				    rdfcv:constrainingElement "existential restrictions" ] .
 						
 				# data
 				# ----
@@ -257,7 +255,7 @@ rdfcv2spin:universal-quantification-on-properties
     spin:body [
         rdf:type sp:Construct ;
         sp:text """
-            PREFIX rdfcv2spin: <http://constraints.org/rdfcv2spin#>
+            PREFIX rdfcv2spin: <http://RDF-Constraints-Vocabulary.org/rdfcv2spin#>
             CONSTRUCT {
                 _:cv 
                 	a spin:ConstraintViolation ;
@@ -268,7 +266,7 @@ rdfcv2spin:universal-quantification-on-properties
             WHERE {	  
 			    # constraint
 				# ----------
-				[   a rdfcv:PropertyConstraint ;
+				[   a rdfcv:PropertyConstraint , rdfcv:SimpleConstraint ;
 				    rdfcv:contextClass ?cc ;
 				    rdfcv:leftProperties ( ?lp1 ) ;
 				    rdfcv:classes ( ?c1 ) ;
@@ -302,7 +300,7 @@ rdfcv2spin:asymmetric-object-properties_complex-constraint
     spin:body [
         rdf:type sp:Construct ;
         sp:text """
-            PREFIX rdfcv2spin: <http://constraints.org/rdfcv2spin#>
+            PREFIX rdfcv2spin: <http://RDF-Constraints-Vocabulary.org/rdfcv2spin#>
             CONSTRUCT {
                 _:cv 
                 	a spin:ConstraintViolation ;
@@ -313,12 +311,12 @@ rdfcv2spin:asymmetric-object-properties_complex-constraint
             WHERE {	  
 			    # constraint
 				# ----------				    
-				[   a rdfcv:PropertyConstraint ;
+				[   a rdfcv:PropertyConstraint , rdfcv:SimpleConstraint ;
 				    rdfcv:contextClass ?cc ;
 				    rdfcv:leftProperties ( ?propertyInverse ) ;
 				    rdfcv:rightProperties ( ?propertyAsymmetric ) ;
 				    rdfcv:constrainingElement "inverse" ] .
-				[   a rdfcv:PropertyConstraint ;
+				[   a rdfcv:PropertyConstraint , rdfcv:SimpleConstraint ;
 				    rdfcv:contextClass ?cc ;
 				    rdfcv:leftProperties ( ?propertyAsymmetric ) ;
 				    rdfcv:rightProperties ( ?propertyInverse ) ;
@@ -350,7 +348,7 @@ rdfcv2spin:asymmetric-object-properties_complex-constraint_2
     spin:body [
         rdf:type sp:Construct ;
         sp:text """
-            PREFIX rdfcv2spin: <http://constraints.org/rdfcv2spin#>
+            PREFIX rdfcv2spin: <http://RDF-Constraints-Vocabulary.org/rdfcv2spin#>
             CONSTRUCT {
                 _:cv 
                 	a spin:ConstraintViolation ;
@@ -361,12 +359,12 @@ rdfcv2spin:asymmetric-object-properties_complex-constraint_2
             WHERE {	  
 			    # constraint
 				# ----------				    
-				[   a rdfcv:PropertyConstraint ;
+				[   a rdfcv:PropertyConstraint , rdfcv:SimpleConstraint ;
 				    rdfcv:contextClass ?cc ;
 				    rdfcv:leftProperties ( ?propertyInverse ) ;
 				    rdfcv:rightProperties ( ?propertyAsymmetric ) ;
 				    rdfcv:constrainingElement "inverse" ] .
-				[   a rdfcv:PropertyConstraint ;
+				[   a rdfcv:PropertyConstraint , rdfcv:SimpleConstraint ;
 				    rdfcv:contextClass ?cc ;
 				    rdfcv:leftProperties ( ?propertyAsymmetric ) ;
 				    rdfcv:rightProperties ( ?propertyInverse ) ;
@@ -398,7 +396,7 @@ rdfcv2spin:asymmetric-object-properties_simple-constraint
     spin:body [
         rdf:type sp:Construct ;
         sp:text """
-            PREFIX rdfcv2spin: <http://constraints.org/rdfcv2spin#>
+            PREFIX rdfcv2spin: <http://RDF-Constraints-Vocabulary.org/rdfcv2spin#>
             CONSTRUCT {
                 _:cv 
                 	a spin:ConstraintViolation ;
@@ -409,7 +407,7 @@ rdfcv2spin:asymmetric-object-properties_simple-constraint
             WHERE {	  
 			    # constraint
 				# ----------				    
-				[   a rdfcv:PropertyConstraint ;
+				[   a rdfcv:PropertyConstraint , rdfcv:SimpleConstraint ;
 				    rdfcv:contextClass ?cc ;
 				    rdfcv:leftProperties ( ?propertyAsymmetric ) ;
 				    rdfcv:constrainingElement "asymmetric" ] .
@@ -440,7 +438,7 @@ rdfcv2spin:asymmetric-object-properties_simple-constraint_2
     spin:body [
         rdf:type sp:Construct ;
         sp:text """
-            PREFIX rdfcv2spin: <http://constraints.org/rdfcv2spin#>
+            PREFIX rdfcv2spin: <http://RDF-Constraints-Vocabulary.org/rdfcv2spin#>
             CONSTRUCT {
                 _:cv 
                 	a spin:ConstraintViolation ;
@@ -451,7 +449,7 @@ rdfcv2spin:asymmetric-object-properties_simple-constraint_2
             WHERE {	  
 			    # constraint
 				# ----------				    
-				[   a rdfcv:PropertyConstraint ;
+				[   a rdfcv:PropertyConstraint , rdfcv:SimpleConstraint ;
 				    rdfcv:contextClass ?cc ;
 				    rdfcv:leftProperties ( ?propertyAsymmetric ) ;
 				    rdfcv:constrainingElement "asymmetric" ] .
@@ -484,7 +482,7 @@ rdfcv2spin:inverse-properties
     spin:body [
         rdf:type sp:Construct ;
         sp:text """
-            PREFIX rdfcv2spin: <http://constraints.org/rdfcv2spin#>
+            PREFIX rdfcv2spin: <http://RDF-Constraints-Vocabulary.org/rdfcv2spin#>
             CONSTRUCT {
                 _:cv 
                 	a spin:ConstraintViolation ;
@@ -495,7 +493,7 @@ rdfcv2spin:inverse-properties
             WHERE {	  
 			    # constraint
 				# ----------
-				[   a rdfcv:PropertyConstraint ;
+				[   a rdfcv:PropertyConstraint , rdfcv:SimpleConstraint ;
 				    rdfcv:contextClass ?cc ;
 				    rdfcv:leftProperties ( ?inverseProperty ) ;
 				    rdfcv:rightProperties ( ?property ) ;
@@ -528,7 +526,7 @@ rdfcv2spin:inverse-properties_2
     spin:body [
         rdf:type sp:Construct ;
         sp:text """
-            PREFIX rdfcv2spin: <http://constraints.org/rdfcv2spin#>
+            PREFIX rdfcv2spin: <http://RDF-Constraints-Vocabulary.org/rdfcv2spin#>
             CONSTRUCT {
                 _:cv 
                 	a spin:ConstraintViolation ;
@@ -539,7 +537,7 @@ rdfcv2spin:inverse-properties_2
             WHERE {	  
 			    # constraint
 				# ----------
-				[   a rdfcv:PropertyConstraint ;
+				[   a rdfcv:PropertyConstraint , rdfcv:SimpleConstraint ;
 				    rdfcv:contextClass ?cc ;
 				    rdfcv:leftProperties ( ?inverseProperty ) ;
 				    rdfcv:rightProperties ( ?property ) ;
@@ -572,7 +570,7 @@ rdfcv2spin:inverse-properties_3
     spin:body [
         rdf:type sp:Construct ;
         sp:text """
-            PREFIX rdfcv2spin: <http://constraints.org/rdfcv2spin#>
+            PREFIX rdfcv2spin: <http://RDF-Constraints-Vocabulary.org/rdfcv2spin#>
             CONSTRUCT {
                 _:cv 
                 	a spin:ConstraintViolation ;
@@ -583,7 +581,7 @@ rdfcv2spin:inverse-properties_3
             WHERE {	  
 			    # constraint
 				# ----------
-				[   a rdfcv:PropertyConstraint ;
+				[   a rdfcv:PropertyConstraint , rdfcv:SimpleConstraint ;
 				    rdfcv:contextClass ?cc ;
 				    rdfcv:leftProperties ( ?inverseProperty ) ;
 				    rdfcv:rightProperties ( ?property ) ;
@@ -615,7 +613,7 @@ rdfcv2spin:inverse-properties_4
     spin:body [
         rdf:type sp:Construct ;
         sp:text """
-            PREFIX rdfcv2spin: <http://constraints.org/rdfcv2spin#>
+            PREFIX rdfcv2spin: <http://RDF-Constraints-Vocabulary.org/rdfcv2spin#>
             CONSTRUCT {
                 _:cv 
                 	a spin:ConstraintViolation ;
@@ -626,7 +624,7 @@ rdfcv2spin:inverse-properties_4
             WHERE {	  
 			    # constraint
 				# ----------
-				[   a rdfcv:PropertyConstraint ;
+				[   a rdfcv:PropertyConstraint , rdfcv:SimpleConstraint ;
 				    rdfcv:contextClass ?cc ;
 				    rdfcv:leftProperties ( ?inverseProperty ) ;
 				    rdfcv:rightProperties ( ?property ) ;
